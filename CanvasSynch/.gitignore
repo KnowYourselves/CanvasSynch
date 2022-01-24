@@ -1,5 +1,5 @@
 .venv
 .vscode
 .env
-static/
+static
 __pycache__

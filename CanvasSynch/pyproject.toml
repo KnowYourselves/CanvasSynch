@@ -7,10 +7,14 @@ authors = ["KnowYourselves <rsalvarez@uc.cl>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 python-dotenv = "^0.19.2"
-requests = "^2.26.0"
+canvasapi = "^2.2.0"
+inquirer = "^2.9.1"
+click = "^8.0.3"
 
 [tool.poetry.dev-dependencies]
 black = "^21.12b0"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
