@@ -19,14 +19,11 @@ class CanvasSynch:
         self.cli = CanvasCLI()
         self.static_folder = static_folder.rstrip("/")
 
-    def start(self, override=False) -> None:
-        static_courses = self.get_courses_from_static()
-        synch_directly = self.cli.should_synch_directly(static_courses, override)
+    def synch(self, override=False) -> None:
+        canvas_courses = self.get_courses_from_static()
+        synch_directly = self.cli.should_synch_directly(canvas_courses, override)
         if override or synch_directly:
-            courses = [
-                Course(self.api, canvas_course, f"{self.static_folder}/courses")
-                for canvas_course in static_courses
-            ]
+            courses = self.canvas_courses_to_our_courses(canvas_courses)
             self.direct_synch(courses)
         else:
             self.interactive_synch()
@@ -39,6 +36,14 @@ class CanvasSynch:
 
         except FileNotFoundError:
             return []
+
+    def canvas_courses_to_our_courses(
+        self, courses: List[CanvasCourse]
+    ) -> List[Course]:
+        return [
+            Course(self.api, canvas_course, f"{self.static_folder}/courses")
+            for canvas_course in courses
+        ]
 
     def interactive_synch(self) -> None:
         course = self.get_course()
@@ -69,11 +74,3 @@ class CanvasSynch:
     def direct_synch(self, courses: List[Course]) -> None:
         for course in courses:
             course.synch()
-
-    # test_course = canvas.get_courses()[1]
-    # test = test_course.get_assignments()[0]
-    # user_id = 108363
-
-    # result, file = canvas.upload_file(test, "./static/test.pdf", user_id)
-    # print(result, file)
-    # print(canvas.create_submission(test, user_id, file["id"]))

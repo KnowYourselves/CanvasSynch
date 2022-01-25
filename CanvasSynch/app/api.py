@@ -24,6 +24,7 @@ class CanvasAPI:
                 "submission_types": ["online_upload"],
                 "allowed_extensions": ["pdf"],
                 "description": description,
+                "published": True,
             }
         )
 

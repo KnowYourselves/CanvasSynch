@@ -22,7 +22,7 @@ def main(static_folder: str, synch_directly: bool):
         exit(1)
 
     canvas_synch = CanvasSynch(base_url, access_token, static_folder=static_folder)
-    canvas_synch.start(override=synch_directly)
+    canvas_synch.synch(override=synch_directly)
 
 
 if __name__ == "__main__":

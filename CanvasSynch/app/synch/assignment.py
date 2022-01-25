@@ -25,7 +25,8 @@ class Assignment:
     def get_users_from_static(self) -> List[User]:
         user_ids = [int(user_id) for user_id in os.listdir(self.path)]
         return [
-            User(self.api, user, self.path) for user in self.get_users_by_ids(user_ids)
+            User(self.api, user, self.assignment, self.path)
+            for user in self.get_users_by_ids(user_ids)
         ]
 
     def get_users_by_ids(self, users_ids: List[int]) -> List[CanvasUserDisplay]:

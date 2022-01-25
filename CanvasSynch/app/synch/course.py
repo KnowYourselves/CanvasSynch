@@ -4,6 +4,7 @@ from typing import List
 from canvasapi.course import Course as CanvasCourse
 
 from app.api import CanvasAPI
+
 from .assignment import Assignment
 
 
