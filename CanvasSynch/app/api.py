@@ -1,4 +1,5 @@
 from typing import Iterable, List, Optional
+from time import sleep
 
 from canvasapi import Canvas
 from canvasapi.assignment import Assignment
@@ -29,7 +30,15 @@ class CanvasAPI:
         )
 
     def get_gradeable_students(self, assignment: Assignment) -> Iterable[UserDisplay]:
-        return assignment.get_gradeable_students()
+        students = list(assignment.get_gradeable_students())
+        for _ in range(5):
+            print("Getting gradeable students...")
+            if len(students):
+                return students
+            sleep(1)
+            students = list(assignment.get_gradeable_students())
+        print("Couldn't find gradeable students.")
+        return []
 
     def upload_file(self, assignment: Assignment, file_path: str, user_id: int):
         return assignment.upload_to_submission(file_path, user=user_id)

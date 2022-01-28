@@ -30,5 +30,5 @@ class Assignment:
         ]
 
     def get_users_by_ids(self, users_ids: List[int]) -> List[CanvasUserDisplay]:
-        users = self.assignment.get_gradeable_students()
+        users = self.api.get_gradeable_students(self.assignment)
         return list(filter(lambda user: user.id in users_ids, users))

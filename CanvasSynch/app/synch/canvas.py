@@ -70,10 +70,7 @@ class CanvasSynch:
             return self.api.create_assignment(course, **assignment_data)
 
     def get_user(self, assignment: CanvasAssignment) -> CanvasUserDisplay:
-        users = assignment.get_gradeable_students()
-        if not users:
-            print("There are no gradeable users.")
-            exit(0)
+        users = self.api.get_gradeable_students(assignment)
         return self.cli.select_element(users, label="user")
 
     def get_filename(self) -> str:
