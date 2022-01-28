@@ -26,4 +26,23 @@ def main(static_folder: str, synch_directly: bool):
 
 
 if __name__ == "__main__":
+    import logging
+
+    logger = logging.getLogger("canvasapi")
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
+
+    debug_handler = logging.StreamHandler(stream=open("debug.log", "w"))
+    debug_handler.setLevel(logging.DEBUG)
+    debug_handler.setFormatter(formatter)
+
+    error_handler = logging.StreamHandler()
+    error_handler.setLevel(logging.ERROR)
+    error_handler.setFormatter(formatter)
+
+    logger.addHandler(debug_handler)
+    logger.addHandler(error_handler)
+    logger.setLevel(logging.DEBUG)
+
     main()

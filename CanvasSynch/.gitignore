@@ -3,3 +3,5 @@
 .env
 static
 __pycache__
+*.json
+*.log

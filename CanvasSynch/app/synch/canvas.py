@@ -49,7 +49,9 @@ class CanvasSynch:
         course = self.get_course()
         assignment = self.get_assignment(course)
         user = self.get_user(assignment)
-        print(user)
+        filename = self.get_filename()
+        _, file = self.api.upload_file(assignment, filename, user.id)
+        self.api.create_submission(assignment, user.id, file.get("id"))
 
     def get_course(self) -> CanvasCourse:
         courses = self.api.get_courses()
@@ -69,7 +71,18 @@ class CanvasSynch:
 
     def get_user(self, assignment: CanvasAssignment) -> CanvasUserDisplay:
         users = assignment.get_gradeable_students()
+        if not users:
+            print("There are no gradeable users.")
+            exit(0)
         return self.cli.select_element(users, label="user")
+
+    def get_filename(self) -> str:
+        file_path = ""
+        while not os.path.isfile(file_path):
+            if file_path:
+                print("Please enter a existing file.")
+            file_path = self.cli.get_text_elements(labels=["file"]).get("file")
+        return file_path
 
     def direct_synch(self, courses: List[Course]) -> None:
         for course in courses:

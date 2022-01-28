@@ -1,3 +1,4 @@
+from email.mime import base
 import json
 import os
 import random
@@ -32,6 +33,9 @@ def main(input_file, output_folder, test_pdf, n_assignments):
     filename = os.path.basename(test_pdf)
 
     base_path = f"{output_folder}/courses"
+    if os.path.exists(base_path):
+        shutil.rmtree(base_path)
+
     courses = json.load(input_file)
     for course in courses.get("courses"):
         course_id = course.get("id")
